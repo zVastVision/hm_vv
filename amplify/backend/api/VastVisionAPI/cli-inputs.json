@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/inventory/items": {
+      "name": "/inventory/items",
+      "lambdaFunction": "VastVisionAPIHandler",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

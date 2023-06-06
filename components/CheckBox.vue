@@ -1,0 +1,101 @@
+<template>
+  <label>
+    <input
+      v-model="model"
+      class="absolute cursor-pointer h-0 w-0 opacity-0"
+      type="checkbox"
+      :value="value"
+      :disabled="disabled"
+      :checked="checked"
+      @focus="outlineActive=true"
+      @blur="outlineActive=false"
+    >
+    <span
+      class="
+          bg-myn-accent
+          flex
+          rounded
+          border-2 border-vvn-white-15
+        "
+      :class="{'outline-active': outlineActive}"
+    >
+      <div class="box bg-white">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            class="icon"
+            d="M12.688 23.0044C12.3152 23.0028 11.9577 22.8556 11.6919 22.5942L5.12939 16.0317C4.86521 15.7676 4.7168 15.4092 4.7168 15.0356C4.7168 14.662 4.86521 14.3037 5.12939 14.0395C5.39357 13.7754 5.75188 13.627 6.12549 13.627C6.49909 13.627 6.8574 13.7754 7.12158 14.0395L12.688 19.606L24.8169 7.47705C24.9477 7.34624 25.103 7.24248 25.2739 7.17168C25.4448 7.10089 25.628 7.06445 25.813 7.06445C25.998 7.06445 26.1812 7.10089 26.3521 7.17168C26.523 7.24248 26.6783 7.34624 26.8091 7.47705C26.9399 7.60786 27.0437 7.76315 27.1144 7.93406C27.1852 8.10497 27.2217 8.28815 27.2217 8.47314C27.2217 8.65813 27.1852 8.84131 27.1144 9.01222C27.0437 9.18313 26.9399 9.33843 26.8091 9.46924L13.6841 22.5942C13.4182 22.8556 13.0608 23.0028 12.688 23.0044Z"
+            fill="white"
+          />
+        </svg>
+      </div>
+    </span>
+  </label>
+</template>
+<script lang="ts" setup>
+interface Props {
+  modelValue: [] | boolean
+  value: string | boolean | number
+  disabled?: boolean
+  checked?: boolean
+}
+const props = withDefaults(defineProps<Props>(), {
+  disabled: false,
+  checked: false
+});
+
+const emit = defineEmits<{
+  (e: "update:modelValue", value: boolean | string[]): void;
+}>()
+
+const outlineActive = ref(false)
+
+
+const model = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+  },
+});
+</script>
+<style lang="scss" scoped>
+span {
+  transition: all 0.5s;
+  width: 28px;
+  height: 28px;
+
+  .box {
+    width: 100%;
+    height: 100%;
+    background: black;
+    transition: all 0.5s;
+
+    .icon {
+      fill: black;
+      transition: all 0.2s;
+    }
+  }
+
+  &.outline-active {
+    border-color: $color-green;
+  }
+}
+
+
+input {
+  &:checked+span {
+    .box {
+      .icon {
+        fill: $color-green;
+      }
+    }
+  }
+}
+</style>

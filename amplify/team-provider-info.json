@@ -1,0 +1,39 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplify2772fc1a5d144-staging-153733-authRole",
+      "UnauthRoleArn": "arn:aws:iam::880145880830:role/amplify-amplify2772fc1a5d144-staging-153733-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::880145880830:role/amplify-amplify2772fc1a5d144-staging-153733-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-amplify2772fc1a5d144-staging-153733-deployment",
+      "UnauthRoleName": "amplify-amplify2772fc1a5d144-staging-153733-unauthRole",
+      "StackName": "amplify-amplify2772fc1a5d144-staging-153733",
+      "StackId": "arn:aws:cloudformation:eu-west-2:880145880830:stack/amplify-amplify2772fc1a5d144-staging-153733/1bcea4a0-da11-11ed-8da0-063bcb9ea3e4",
+      "AmplifyAppId": "d3u2bf98s5g544"
+    },
+    "categories": {
+      "api": {
+        "VastVisionAPI": {},
+        "vastvision": {}
+      },
+      "auth": {
+        "VastVision": {}
+      },
+      "function": {
+        "vastvisionfe55b64f": {},
+        "VastVisionAPIHandler": {
+          "deploymentBucketName": "amplify-amplify2772fc1a5d144-staging-153733-deployment",
+          "s3Key": "amplify-builds/VastVisionAPIHandler-4a4b77586c6e444d4d52-build.zip"
+        },
+        "VastVisionRFIDItemUpdate": {
+          "deploymentBucketName": "amplify-amplify2772fc1a5d144-staging-153733-deployment",
+          "s3Key": "amplify-builds/VastVisionRFIDItemUpdate-3148784e4a72596b6632-build.zip"
+        },
+        "VastVisionCronRemoveItem": {
+          "deploymentBucketName": "amplify-amplify2772fc1a5d144-staging-153733-deployment",
+          "s3Key": "amplify-builds/VastVisionCronRemoveItem-33554c41533476334f2b-build.zip"
+        }
+      }
+    }
+  }
+}

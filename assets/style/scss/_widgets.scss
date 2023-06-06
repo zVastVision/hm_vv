@@ -1,0 +1,70 @@
+@import './variables';
+@import './typography';
+
+.table_details_card {
+    font-family: $poppins;
+    border-radius: 0.625rem;
+    background-color: $color-white-10;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+
+    &__heading {
+        font-size: 0.875rem;
+    }
+
+    &__body {
+        &--regular {
+            font-size: 1rem;
+        }
+        &--large {
+            font-size: 1.25rem;
+        }
+    }
+}
+
+.btn {
+    height: 2.5rem;
+    border-radius: 0.625rem;
+    border: 1px solid $color-green;
+    font-size: 1rem;
+    box-sizing: border-box;
+    align-items: center;
+
+    &:disabled {
+        border: 1px solid $color-gray-90;
+        cursor: not-allowed !important;
+    }
+
+    &--primary {
+        background-color: $color-green;
+        color: white;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+
+        &:disabled {
+            background-color:$color-gray-90;
+        }
+    }
+
+    &--large {
+        height: 3rem;
+    }
+
+    &--danger {
+        background-color: $color-red;
+        border-color: $color-red;
+        color: white;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+
+        &:disabled {
+            background-color:$color-gray-90;
+        }
+    }
+
+    &--secondary {
+        color: $color-green;
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
+    }
+}

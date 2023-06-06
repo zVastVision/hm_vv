@@ -1,0 +1,71 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint --ext \".ts,.js,.vue\" --ignore-path .gitignore .",
+    "lintfix": "eslint --fix --ext \".ts,.js,.vue\" --ignore-path .gitignore .",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@nuxt/devtools": "^0.5.0",
+    "@nuxt/test-utils": "^3.4.0",
+    "@nuxtjs/eslint-module": "^4.0.2",
+    "@nuxtjs/style-resources": "^1.2.1",
+    "@nuxtjs/tailwindcss": "^6.6.4",
+    "@pinia/nuxt": "^0.4.11",
+    "@rollup/plugin-dsv": "^3.0.2",
+    "@types/papaparse": "^5.3.7",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "@vee-validate/nuxt": "^4.8.6",
+    "@vee-validate/zod": "^4.8.6",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "@vue/eslint-config-standard": "^8.0.1",
+    "@vue/test-utils": "^2.3.2",
+    "autoprefixer": "^10.4.14",
+    "aws-amplify": "^5.1.2",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.9.0",
+    "husky": "^8.0.3",
+    "jsdom": "^21.1.1",
+    "lint-staged": "^13.1.0",
+    "node-sass": "^8.0.0",
+    "nuxt": "^3.5.1",
+    "papaparse": "^5.4.1",
+    "path-browserify": "^1.0.1",
+    "pinia": "^2.1.2",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.6",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.2.1",
+    "tailwindcss": "^3.2.7",
+    "typescript": "^4.9.5",
+    "unplugin-auto-import": "^0.15.3",
+    "vee-validate": "^4.8.6",
+    "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^0.30.1",
+    "vue-final-modal": "^4.2.0",
+    "vue-toastification": "^2.0.0-rc.5",
+    "webpack": "^5.76.0",
+    "zod": "^3.21.4"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,vue,html,css}": [
+      "yarn lintfix"
+    ]
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  }
+}

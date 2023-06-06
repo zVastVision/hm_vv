@@ -1,0 +1,57 @@
+type ExtraDetail {
+  name: String
+  value: String
+}
+
+type Warehouse @model @auth(rules:[{ allow: groups, groupsField: "group" }])  {
+  id: ID!
+  group: String! @auth(rules: [{ allow: groups, groupsField: "group", operations: [create, read, delete] }])
+  organizationID: String! @index(name: "byOrganization")
+  Organization: Organization @belongsTo(fields: ["organizationID"])
+  name: String
+  location: String
+  Products: [Product] @hasMany(indexName: "byWarehouse", fields: ["id"])
+}
+
+type Organization @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
+  group: String! @auth(rules: [{ allow: groups, groupsField: "group", operations: [create, read, delete] }])
+  Warehouses: [Warehouse] @hasMany(indexName: "byOrganization", fields: ["groupID"])
+  name: String
+  groupID: String! @primaryKey
+}
+
+type KitPart @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
+  id: ID!
+  group: String! @auth(rules: [{ allow: groups, groupsField: "group", operations: [create, read, delete] }])
+  quantity: Int
+  kitID: ID! @index(name: "byProduct")
+  Kit: Product @belongsTo(fields: ["kitID"])
+  part: Product @belongsTo(fields: ["partID"])
+  partID: ID
+}
+
+type Item @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
+  id: ID!
+  group: String! @auth(rules: [{ allow: groups, groupsField: "group", operations: [create, read, delete] }])
+  productID: ID! @index(name: "byProduct")
+  isTagged: Boolean
+  isActive: Boolean
+  location: String
+  product: Product @belongsTo(fields: ["productID"])
+  lastActive: AWSTimestamp
+}
+
+type Product @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
+  id: ID!
+  group: String! @auth(rules: [{ allow: groups, groupsField: "group", operations: [create, read, delete] }])
+  name: String!
+  isKit: Boolean!
+  items: [Item] @hasMany(indexName: "byProduct", fields: ["id"])
+  kitParts: [KitPart] @hasMany(indexName: "byProduct", fields: ["id"])
+  description: String
+  trackThreshold: Boolean!
+  threshold: Int
+  Warehouse: Warehouse @belongsTo(fields: ["warehouseID"])
+  extraDetails: [ExtraDetail]
+  warehouseID: ID! @index(name: "byWarehouse")
+}
