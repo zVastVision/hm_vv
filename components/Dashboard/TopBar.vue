@@ -13,7 +13,9 @@
       </p>
     </div>
     <div class="flex items-center">
-      <button class="h-12 w-12 rounded-full border-vvn-white-10 flex flex-col justify-center border">
+      <button 
+        class="h-12 w-12 rounded-full border-vvn-white-10 flex flex-col justify-center border"
+        @click="signOut()">
         <img
           src="/images/svg/box.svg"
           class="mx-auto"
@@ -56,6 +58,14 @@
   </div>
 </template>
 <script lang="ts" setup>
+
+import { Auth } from 'aws-amplify'
+
+const signOut = async () => {
+  await Auth.signOut()
+  window.location.href = "/"
+}
+
 const store = useWarehouseStore()
 const route = useRoute()
 const routeList = computed(() => route.path.split("/").slice(2))
