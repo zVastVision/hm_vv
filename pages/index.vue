@@ -71,6 +71,7 @@
       <button
         class="btn btn--primary w-full mt-20 mb-5"
         type="submit"
+        @click="submitClick()"
       >
         Save
       </button>
@@ -88,7 +89,9 @@ definePageMeta({
 const store = useWarehouseStore()
 useAsyncData(async () => {
   await store.getOrganization()
-    .catch(() => {
+    .catch((err) => {
+      console.log("ERROR")
+      console.log(err)
       useToast().error("Failed to fetch organization details")
     })
 })
@@ -113,7 +116,23 @@ const validationResult = useForm({
   validationSchema,
 })
 
-const onSubmit = validationResult.handleSubmit(values => {
+const submitClick = () => {
+  console.log("is this being called?")
+  store.getOrganization()
+  editItemsOpen.value = false
+  store.createWarehouse(data.name, data.location, store.organization?.id as string)
+    .then(() => {
+      (document.getElementById("form") as HTMLFormElement).reset();
+      store.getOrganization()
+      editItemsOpen.value = false
+    })
+    .catch(() => {
+      useToast().error("Warehouse creation failed")
+    })
+}
+
+/*const onSubmit = validationResult.handleSubmit(values => {
+  console.log("is this being called?")
   store.createWarehouse(values.name, data.location, store.organization?.id as string)
     .then(() => {
       (document.getElementById("form") as HTMLFormElement).reset();
@@ -124,5 +143,5 @@ const onSubmit = validationResult.handleSubmit(values => {
     .catch(() => {
       useToast().error("Warehouse creation failed")
     })
-})
+})*/
 </script>

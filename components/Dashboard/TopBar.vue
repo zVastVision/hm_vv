@@ -29,7 +29,9 @@
           alt="settings"
         >
       </button>
-      <button class="h-12 w-12 rounded-full border-vvn-white-10 flex flex-col justify-center border">
+      <button 
+        class="h-12 w-12 rounded-full border-vvn-white-10 flex flex-col justify-center border"
+        @click="redirect()">
         <img
           src="/images/svg/comment.svg"
           class="mx-auto"
@@ -44,15 +46,15 @@
         >
       </button>
       <img
-        src="/images/jpg/profile.jpg"
+        src="/images/jpg/sunrise_office-logo.jpeg"
         alt="profile photo"
         class="rounded-full block h-14 w-14 object-cover ml-5"
       >
       <div class=" ml-3">
         <p class="text-white">
-          Mason
+          {{ data.name }}
         </p>
-        <small class="text-vvn-gray">Mason.martinez@bluehalo.com</small>
+        <small class="text-vvn-gray">{{ data.email }}</small>
       </div>
     </div>
   </div>
@@ -61,10 +63,32 @@
 
 import { Auth } from 'aws-amplify'
 
+interface State {
+  email: string
+  name: string
+}
+const data = reactive<State>({
+  email: "",
+  name: ""
+})
+
+const currentUser = await Auth.currentAuthenticatedUser()
+data.email = currentUser.attributes.email
+data.name = currentUser.attributes.given_name + " " + currentUser.attributes.family_name
+
 const signOut = async () => {
   await Auth.signOut()
   window.location.href = "/"
 }
+
+const redirect = async () => {
+  window.location.href = "/"
+}
+
+//console.log("Current User!!!!!!!")
+//console.log(data.email)
+//console.log(currentUser.attributes.email)
+//console.log(currentUser.attributes.given_name + " " + currentUser.attributes.family_name)
 
 const store = useWarehouseStore()
 const route = useRoute()

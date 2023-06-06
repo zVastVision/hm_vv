@@ -6,6 +6,9 @@ export const useAuthStore = defineStore('auth', {
         login:async (username:string, password: string) => {
             let res
             try {
+            //res = await Auth.signUp({username, password, attributes: {given_name:'Kyle', family_name:'Guin', profile:'', picture:''}})
+            //const auth_code = '518412'
+            //res = await Auth.confirmSignUp(username, auth_code)
             res = await Auth.signIn(username, password)
             console.log(res)
             } catch (error) {

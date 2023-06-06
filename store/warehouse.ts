@@ -19,8 +19,26 @@ export const useWarehouseStore = defineStore('warehouse', {
 
         async getOrganization() {
             const groupList = await useGetUserGroups()
+            console.log("Group List?")
+            console.log(groupList[0])
+
+            //groupList = ['vast-vision']
+            //let res = undefined
             let res = await DataStore.query(OrganizationModel, groupList[0])
+            //const res = await DataStore.query(OrganizationModel, groupList[0])
+            console.log("res?")
+            console.log(res)
+
+
+            //this.organization = { name: 'Vast Vision', id: 'vast-vision' }
+            //await this.findById('8e4f87fa-e7aa-4774-9ba3-9a700bac1ca4')
+            //this.warehouseList = [this.warehouse]
+            //this.organization = { name: 'Sunrise Offices', id: 'sunrise' }
+            //await this.findById('7960f460-3e66-4c75-9586-4a2473779ad2')
+            //this.warehouseList = [this.warehouse]
+
             if (res === undefined) {
+                console.log("INSIDE THIS MF")
                 Hub.listen("datastore", async (data) => {
                     const {payload} = data
                     if (payload.event === "ready") {

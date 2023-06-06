@@ -16,6 +16,7 @@
         >Email</label>
         <TextInput
           id="email"
+          autocomplete="off"
           v-model.trim="data.name"
           name="email"
           rules="required|email"
@@ -73,6 +74,7 @@ const validationResult = useForm({
 const onSubmit = validationResult.handleSubmit(values => {
   store.login(values.email, values.password)
   .then(() => {
+    //window.location.href = "/organization"
     window.location.href = "/"
   })
   .catch((error: Error) => {
