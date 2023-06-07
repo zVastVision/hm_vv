@@ -136,9 +136,12 @@ type EagerItem = {
   readonly productID: string;
   readonly isTagged?: boolean | null;
   readonly isActive?: boolean | null;
+  readonly isEmployee?: boolean | null;
+  readonly isEquipment?: boolean | null;
   readonly location?: string | null;
   readonly product?: Product | null;
   readonly lastActive?: number | null;
+  readonly EPC_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -153,9 +156,12 @@ type LazyItem = {
   readonly productID: string;
   readonly isTagged?: boolean | null;
   readonly isActive?: boolean | null;
+  readonly isEmployee?: boolean | null;
+  readonly isEquipment?: boolean | null;
   readonly location?: string | null;
   readonly product: AsyncItem<Product | undefined>;
   readonly lastActive?: number | null;
+  readonly EPC_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -212,4 +218,86 @@ export declare type Product = LazyLoading extends LazyLoadingDisabled ? EagerPro
 
 export declare const Product: (new (init: ModelInit<Product>) => Product) & {
   copyOf(source: Product, mutator: (draft: MutableModel<Product>) => MutableModel<Product> | void): Product;
+}
+
+type EagerEmployee = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Employee, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly group: string;
+  readonly name: string;
+  readonly items?: Item | null;
+  readonly title?: string | null;
+  readonly email?: string | null;
+  readonly phone?: string | null;
+  readonly extraDetails?: (ExtraDetail | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly employeeItemsId?: string | null;
+}
+
+type LazyEmployee = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Employee, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly group: string;
+  readonly name: string;
+  readonly items: AsyncItem<Item | undefined>;
+  readonly title?: string | null;
+  readonly email?: string | null;
+  readonly phone?: string | null;
+  readonly extraDetails?: (ExtraDetail | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly employeeItemsId?: string | null;
+}
+
+export declare type Employee = LazyLoading extends LazyLoadingDisabled ? EagerEmployee : LazyEmployee
+
+export declare const Employee: (new (init: ModelInit<Employee>) => Employee) & {
+  copyOf(source: Employee, mutator: (draft: MutableModel<Employee>) => MutableModel<Employee> | void): Employee;
+}
+
+type EagerEquipment = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Equipment, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly group: string;
+  readonly name: string;
+  readonly items?: Item | null;
+  readonly description?: string | null;
+  readonly part_id?: string | null;
+  readonly extraDetails?: (ExtraDetail | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly equipmentItemsId?: string | null;
+}
+
+type LazyEquipment = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Equipment, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly group: string;
+  readonly name: string;
+  readonly items: AsyncItem<Item | undefined>;
+  readonly description?: string | null;
+  readonly part_id?: string | null;
+  readonly extraDetails?: (ExtraDetail | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly equipmentItemsId?: string | null;
+}
+
+export declare type Equipment = LazyLoading extends LazyLoadingDisabled ? EagerEquipment : LazyEquipment
+
+export declare const Equipment: (new (init: ModelInit<Equipment>) => Equipment) & {
+  copyOf(source: Equipment, mutator: (draft: MutableModel<Equipment>) => MutableModel<Equipment> | void): Equipment;
 }

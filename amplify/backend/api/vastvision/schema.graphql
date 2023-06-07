@@ -36,9 +36,12 @@ type Item @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
   productID: ID! @index(name: "byProduct")
   isTagged: Boolean
   isActive: Boolean
+  isEmployee: Boolean
+  isEquipment: Boolean
   location: String
   product: Product @belongsTo(fields: ["productID"])
   lastActive: AWSTimestamp
+  EPC_id: String
 }
 
 type Product @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
@@ -54,4 +57,25 @@ type Product @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
   Warehouse: Warehouse @belongsTo(fields: ["warehouseID"])
   extraDetails: [ExtraDetail]
   warehouseID: ID! @index(name: "byWarehouse")
+}
+
+type Employee @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
+  id: ID!
+  group: String! @auth(rules: [{ allow: groups, groupsField: "group", operations: [create, read, delete] }])
+  name: String!
+  items: Item @hasOne
+  title: String
+  email: String
+  phone: String
+  extraDetails: [ExtraDetail]
+}
+
+type Equipment @model @auth(rules:[{ allow: groups, groupsField: "group" }]) {
+  id: ID!
+  group: String! @auth(rules: [{ allow: groups, groupsField: "group", operations: [create, read, delete] }])
+  name: String!
+  items: Item @hasOne
+  description: String
+  part_id: String
+  extraDetails: [ExtraDetail]
 }

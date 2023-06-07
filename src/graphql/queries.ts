@@ -553,6 +553,8 @@ export const getItem = /* GraphQL */ `
       productID
       isTagged
       isActive
+      isEmployee
+      isEquipment
       location
       product {
         id
@@ -594,6 +596,7 @@ export const getItem = /* GraphQL */ `
         _lastChangedAt
       }
       lastActive
+      EPC_id
       createdAt
       updatedAt
       _version
@@ -615,6 +618,8 @@ export const listItems = /* GraphQL */ `
         productID
         isTagged
         isActive
+        isEmployee
+        isEquipment
         location
         product {
           id
@@ -632,6 +637,7 @@ export const listItems = /* GraphQL */ `
           _lastChangedAt
         }
         lastActive
+        EPC_id
         createdAt
         updatedAt
         _version
@@ -662,6 +668,8 @@ export const syncItems = /* GraphQL */ `
         productID
         isTagged
         isActive
+        isEmployee
+        isEquipment
         location
         product {
           id
@@ -679,6 +687,7 @@ export const syncItems = /* GraphQL */ `
           _lastChangedAt
         }
         lastActive
+        EPC_id
         createdAt
         updatedAt
         _version
@@ -711,6 +720,8 @@ export const itemsByProductID = /* GraphQL */ `
         productID
         isTagged
         isActive
+        isEmployee
+        isEquipment
         location
         product {
           id
@@ -728,6 +739,7 @@ export const itemsByProductID = /* GraphQL */ `
           _lastChangedAt
         }
         lastActive
+        EPC_id
         createdAt
         updatedAt
         _version
@@ -753,8 +765,11 @@ export const getProduct = /* GraphQL */ `
           productID
           isTagged
           isActive
+          isEmployee
+          isEquipment
           location
           lastActive
+          EPC_id
           createdAt
           updatedAt
           _version
@@ -983,6 +998,311 @@ export const productsByWarehouseID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getEmployee = /* GraphQL */ `
+  query GetEmployee($id: ID!) {
+    getEmployee(id: $id) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      title
+      email
+      phone
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      employeeItemsId
+    }
+  }
+`;
+export const listEmployees = /* GraphQL */ `
+  query ListEmployees(
+    $filter: ModelEmployeeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEmployees(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        group
+        name
+        items {
+          id
+          group
+          productID
+          isTagged
+          isActive
+          isEmployee
+          isEquipment
+          location
+          lastActive
+          EPC_id
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        title
+        email
+        phone
+        extraDetails {
+          name
+          value
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        employeeItemsId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncEmployees = /* GraphQL */ `
+  query SyncEmployees(
+    $filter: ModelEmployeeFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncEmployees(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        group
+        name
+        items {
+          id
+          group
+          productID
+          isTagged
+          isActive
+          isEmployee
+          isEquipment
+          location
+          lastActive
+          EPC_id
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        title
+        email
+        phone
+        extraDetails {
+          name
+          value
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        employeeItemsId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getEquipment = /* GraphQL */ `
+  query GetEquipment($id: ID!) {
+    getEquipment(id: $id) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      description
+      part_id
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      equipmentItemsId
+    }
+  }
+`;
+export const listEquipment = /* GraphQL */ `
+  query ListEquipment(
+    $filter: ModelEquipmentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEquipment(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        group
+        name
+        items {
+          id
+          group
+          productID
+          isTagged
+          isActive
+          isEmployee
+          isEquipment
+          location
+          lastActive
+          EPC_id
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        description
+        part_id
+        extraDetails {
+          name
+          value
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        equipmentItemsId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncEquipment = /* GraphQL */ `
+  query SyncEquipment(
+    $filter: ModelEquipmentFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncEquipment(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        group
+        name
+        items {
+          id
+          group
+          productID
+          isTagged
+          isActive
+          isEmployee
+          isEquipment
+          location
+          lastActive
+          EPC_id
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        description
+        part_id
+        extraDetails {
+          name
+          value
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        equipmentItemsId
       }
       nextToken
       startedAt

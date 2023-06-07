@@ -127,22 +127,6 @@
         }
       ]
     },
-    "AMPLIFY_function_VastVisionCronRemoveItem_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "VastVisionCronRemoveItem"
-        }
-      ]
-    },
-    "AMPLIFY_function_VastVisionCronRemoveItem_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "VastVisionCronRemoveItem"
-        }
-      ]
-    },
     "AMPLIFY_function_VastVisionRFIDItemUpdate_deploymentBucketName": {
       "usedBy": [
         {

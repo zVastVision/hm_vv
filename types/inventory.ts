@@ -3,6 +3,7 @@ export interface Inventory {
     name: string
     description: string
     quantity: number
+    liveTags?: number
     trackThreshold: boolean | null
     threshold: number | null
     extraDetails: Record<string, string>[]
@@ -18,10 +19,33 @@ export interface InventoryItem {
     productID: string
     isTagged: boolean
     isActive: boolean
+    isEmployee: boolean
+    isEquipment: boolean
     location: Location
     lastActive: number;
     createdAt?: string | null;
     updatedAt?: string | null;
+}
+
+export interface Employee {
+    id: string,
+    name: string
+    title: string
+    email?: string
+    phone?: string
+    extraDetails: Record<string, string>[]
+    createdAt?: Date
+    updatedAt?: Date
+}
+
+export interface Equipment {
+    id: string,
+    name: string
+    description?: string
+    part_id?: string
+    extraDetails: Record<string, string>[]
+    createdAt?: Date
+    updatedAt?: Date
 }
 
 export interface Location {

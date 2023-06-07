@@ -559,6 +559,8 @@ export const createItem = /* GraphQL */ `
       productID
       isTagged
       isActive
+      isEmployee
+      isEquipment
       location
       product {
         id
@@ -600,6 +602,7 @@ export const createItem = /* GraphQL */ `
         _lastChangedAt
       }
       lastActive
+      EPC_id
       createdAt
       updatedAt
       _version
@@ -619,6 +622,8 @@ export const updateItem = /* GraphQL */ `
       productID
       isTagged
       isActive
+      isEmployee
+      isEquipment
       location
       product {
         id
@@ -660,6 +665,7 @@ export const updateItem = /* GraphQL */ `
         _lastChangedAt
       }
       lastActive
+      EPC_id
       createdAt
       updatedAt
       _version
@@ -679,6 +685,8 @@ export const deleteItem = /* GraphQL */ `
       productID
       isTagged
       isActive
+      isEmployee
+      isEquipment
       location
       product {
         id
@@ -720,6 +728,7 @@ export const deleteItem = /* GraphQL */ `
         _lastChangedAt
       }
       lastActive
+      EPC_id
       createdAt
       updatedAt
       _version
@@ -745,8 +754,11 @@ export const createProduct = /* GraphQL */ `
           productID
           isTagged
           isActive
+          isEmployee
+          isEquipment
           location
           lastActive
+          EPC_id
           createdAt
           updatedAt
           _version
@@ -831,8 +843,11 @@ export const updateProduct = /* GraphQL */ `
           productID
           isTagged
           isActive
+          isEmployee
+          isEquipment
           location
           lastActive
+          EPC_id
           createdAt
           updatedAt
           _version
@@ -917,8 +932,11 @@ export const deleteProduct = /* GraphQL */ `
           productID
           isTagged
           isActive
+          isEmployee
+          isEquipment
           location
           lastActive
+          EPC_id
           createdAt
           updatedAt
           _version
@@ -983,6 +1001,345 @@ export const deleteProduct = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+    }
+  }
+`;
+export const createEmployee = /* GraphQL */ `
+  mutation CreateEmployee(
+    $input: CreateEmployeeInput!
+    $condition: ModelEmployeeConditionInput
+  ) {
+    createEmployee(input: $input, condition: $condition) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      title
+      email
+      phone
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      employeeItemsId
+    }
+  }
+`;
+export const updateEmployee = /* GraphQL */ `
+  mutation UpdateEmployee(
+    $input: UpdateEmployeeInput!
+    $condition: ModelEmployeeConditionInput
+  ) {
+    updateEmployee(input: $input, condition: $condition) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      title
+      email
+      phone
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      employeeItemsId
+    }
+  }
+`;
+export const deleteEmployee = /* GraphQL */ `
+  mutation DeleteEmployee(
+    $input: DeleteEmployeeInput!
+    $condition: ModelEmployeeConditionInput
+  ) {
+    deleteEmployee(input: $input, condition: $condition) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      title
+      email
+      phone
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      employeeItemsId
+    }
+  }
+`;
+export const createEquipment = /* GraphQL */ `
+  mutation CreateEquipment(
+    $input: CreateEquipmentInput!
+    $condition: ModelEquipmentConditionInput
+  ) {
+    createEquipment(input: $input, condition: $condition) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      description
+      part_id
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      equipmentItemsId
+    }
+  }
+`;
+export const updateEquipment = /* GraphQL */ `
+  mutation UpdateEquipment(
+    $input: UpdateEquipmentInput!
+    $condition: ModelEquipmentConditionInput
+  ) {
+    updateEquipment(input: $input, condition: $condition) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      description
+      part_id
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      equipmentItemsId
+    }
+  }
+`;
+export const deleteEquipment = /* GraphQL */ `
+  mutation DeleteEquipment(
+    $input: DeleteEquipmentInput!
+    $condition: ModelEquipmentConditionInput
+  ) {
+    deleteEquipment(input: $input, condition: $condition) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      description
+      part_id
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      equipmentItemsId
     }
   }
 `;

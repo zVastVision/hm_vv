@@ -541,6 +541,8 @@ export const onCreateItem = /* GraphQL */ `
       productID
       isTagged
       isActive
+      isEmployee
+      isEquipment
       location
       product {
         id
@@ -582,6 +584,7 @@ export const onCreateItem = /* GraphQL */ `
         _lastChangedAt
       }
       lastActive
+      EPC_id
       createdAt
       updatedAt
       _version
@@ -598,6 +601,8 @@ export const onUpdateItem = /* GraphQL */ `
       productID
       isTagged
       isActive
+      isEmployee
+      isEquipment
       location
       product {
         id
@@ -639,6 +644,7 @@ export const onUpdateItem = /* GraphQL */ `
         _lastChangedAt
       }
       lastActive
+      EPC_id
       createdAt
       updatedAt
       _version
@@ -655,6 +661,8 @@ export const onDeleteItem = /* GraphQL */ `
       productID
       isTagged
       isActive
+      isEmployee
+      isEquipment
       location
       product {
         id
@@ -696,6 +704,7 @@ export const onDeleteItem = /* GraphQL */ `
         _lastChangedAt
       }
       lastActive
+      EPC_id
       createdAt
       updatedAt
       _version
@@ -718,8 +727,11 @@ export const onCreateProduct = /* GraphQL */ `
           productID
           isTagged
           isActive
+          isEmployee
+          isEquipment
           location
           lastActive
+          EPC_id
           createdAt
           updatedAt
           _version
@@ -801,8 +813,11 @@ export const onUpdateProduct = /* GraphQL */ `
           productID
           isTagged
           isActive
+          isEmployee
+          isEquipment
           location
           lastActive
+          EPC_id
           createdAt
           updatedAt
           _version
@@ -884,8 +899,11 @@ export const onDeleteProduct = /* GraphQL */ `
           productID
           isTagged
           isActive
+          isEmployee
+          isEquipment
           location
           lastActive
+          EPC_id
           createdAt
           updatedAt
           _version
@@ -950,6 +968,333 @@ export const onDeleteProduct = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+    }
+  }
+`;
+export const onCreateEmployee = /* GraphQL */ `
+  subscription OnCreateEmployee($filter: ModelSubscriptionEmployeeFilterInput) {
+    onCreateEmployee(filter: $filter) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      title
+      email
+      phone
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      employeeItemsId
+    }
+  }
+`;
+export const onUpdateEmployee = /* GraphQL */ `
+  subscription OnUpdateEmployee($filter: ModelSubscriptionEmployeeFilterInput) {
+    onUpdateEmployee(filter: $filter) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      title
+      email
+      phone
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      employeeItemsId
+    }
+  }
+`;
+export const onDeleteEmployee = /* GraphQL */ `
+  subscription OnDeleteEmployee($filter: ModelSubscriptionEmployeeFilterInput) {
+    onDeleteEmployee(filter: $filter) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      title
+      email
+      phone
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      employeeItemsId
+    }
+  }
+`;
+export const onCreateEquipment = /* GraphQL */ `
+  subscription OnCreateEquipment(
+    $filter: ModelSubscriptionEquipmentFilterInput
+  ) {
+    onCreateEquipment(filter: $filter) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      description
+      part_id
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      equipmentItemsId
+    }
+  }
+`;
+export const onUpdateEquipment = /* GraphQL */ `
+  subscription OnUpdateEquipment(
+    $filter: ModelSubscriptionEquipmentFilterInput
+  ) {
+    onUpdateEquipment(filter: $filter) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      description
+      part_id
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      equipmentItemsId
+    }
+  }
+`;
+export const onDeleteEquipment = /* GraphQL */ `
+  subscription OnDeleteEquipment(
+    $filter: ModelSubscriptionEquipmentFilterInput
+  ) {
+    onDeleteEquipment(filter: $filter) {
+      id
+      group
+      name
+      items {
+        id
+        group
+        productID
+        isTagged
+        isActive
+        isEmployee
+        isEquipment
+        location
+        product {
+          id
+          group
+          name
+          isKit
+          description
+          trackThreshold
+          threshold
+          warehouseID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lastActive
+        EPC_id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      description
+      part_id
+      extraDetails {
+        name
+        value
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      equipmentItemsId
     }
   }
 `;

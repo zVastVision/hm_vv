@@ -19,6 +19,7 @@ export type ModelWarehouseConditionInput = {
   and?: Array< ModelWarehouseConditionInput | null > | null,
   or?: Array< ModelWarehouseConditionInput | null > | null,
   not?: ModelWarehouseConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelStringInput = {
@@ -59,6 +60,13 @@ export type ModelSizeInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type Warehouse = {
@@ -139,9 +147,12 @@ export type Item = {
   productID: string,
   isTagged?: boolean | null,
   isActive?: boolean | null,
+  isEmployee?: boolean | null,
+  isEquipment?: boolean | null,
   location?: string | null,
   product?: Product | null,
   lastActive?: number | null,
+  EPC_id?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -205,6 +216,7 @@ export type ModelOrganizationConditionInput = {
   and?: Array< ModelOrganizationConditionInput | null > | null,
   or?: Array< ModelOrganizationConditionInput | null > | null,
   not?: ModelOrganizationConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type UpdateOrganizationInput = {
@@ -236,6 +248,7 @@ export type ModelKitPartConditionInput = {
   and?: Array< ModelKitPartConditionInput | null > | null,
   or?: Array< ModelKitPartConditionInput | null > | null,
   not?: ModelKitPartConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelIntInput = {
@@ -286,8 +299,11 @@ export type CreateItemInput = {
   productID: string,
   isTagged?: boolean | null,
   isActive?: boolean | null,
+  isEmployee?: boolean | null,
+  isEquipment?: boolean | null,
   location?: string | null,
   lastActive?: number | null,
+  EPC_id?: string | null,
   _version?: number | null,
 };
 
@@ -296,18 +312,15 @@ export type ModelItemConditionInput = {
   productID?: ModelIDInput | null,
   isTagged?: ModelBooleanInput | null,
   isActive?: ModelBooleanInput | null,
+  isEmployee?: ModelBooleanInput | null,
+  isEquipment?: ModelBooleanInput | null,
   location?: ModelStringInput | null,
   lastActive?: ModelIntInput | null,
+  EPC_id?: ModelStringInput | null,
   and?: Array< ModelItemConditionInput | null > | null,
   or?: Array< ModelItemConditionInput | null > | null,
   not?: ModelItemConditionInput | null,
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type UpdateItemInput = {
@@ -316,8 +329,11 @@ export type UpdateItemInput = {
   productID?: string | null,
   isTagged?: boolean | null,
   isActive?: boolean | null,
+  isEmployee?: boolean | null,
+  isEquipment?: boolean | null,
   location?: string | null,
   lastActive?: number | null,
+  EPC_id?: string | null,
   _version?: number | null,
 };
 
@@ -355,6 +371,7 @@ export type ModelProductConditionInput = {
   and?: Array< ModelProductConditionInput | null > | null,
   or?: Array< ModelProductConditionInput | null > | null,
   not?: ModelProductConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type UpdateProductInput = {
@@ -375,6 +392,122 @@ export type DeleteProductInput = {
   _version?: number | null,
 };
 
+export type CreateEmployeeInput = {
+  id?: string | null,
+  group: string,
+  name: string,
+  title?: string | null,
+  email?: string | null,
+  phone?: string | null,
+  extraDetails?: Array< ExtraDetailInput | null > | null,
+  _version?: number | null,
+  employeeItemsId?: string | null,
+};
+
+export type ModelEmployeeConditionInput = {
+  group?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  phone?: ModelStringInput | null,
+  and?: Array< ModelEmployeeConditionInput | null > | null,
+  or?: Array< ModelEmployeeConditionInput | null > | null,
+  not?: ModelEmployeeConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
+  employeeItemsId?: ModelIDInput | null,
+};
+
+export type Employee = {
+  __typename: "Employee",
+  id: string,
+  group: string,
+  name: string,
+  items?: Item | null,
+  title?: string | null,
+  email?: string | null,
+  phone?: string | null,
+  extraDetails?:  Array<ExtraDetail | null > | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+  employeeItemsId?: string | null,
+};
+
+export type UpdateEmployeeInput = {
+  id: string,
+  group?: string | null,
+  name?: string | null,
+  title?: string | null,
+  email?: string | null,
+  phone?: string | null,
+  extraDetails?: Array< ExtraDetailInput | null > | null,
+  _version?: number | null,
+  employeeItemsId?: string | null,
+};
+
+export type DeleteEmployeeInput = {
+  id: string,
+  _version?: number | null,
+};
+
+export type CreateEquipmentInput = {
+  id?: string | null,
+  group: string,
+  name: string,
+  description?: string | null,
+  part_id?: string | null,
+  extraDetails?: Array< ExtraDetailInput | null > | null,
+  _version?: number | null,
+  equipmentItemsId?: string | null,
+};
+
+export type ModelEquipmentConditionInput = {
+  group?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  part_id?: ModelStringInput | null,
+  and?: Array< ModelEquipmentConditionInput | null > | null,
+  or?: Array< ModelEquipmentConditionInput | null > | null,
+  not?: ModelEquipmentConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
+  equipmentItemsId?: ModelIDInput | null,
+};
+
+export type Equipment = {
+  __typename: "Equipment",
+  id: string,
+  group: string,
+  name: string,
+  items?: Item | null,
+  description?: string | null,
+  part_id?: string | null,
+  extraDetails?:  Array<ExtraDetail | null > | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+  equipmentItemsId?: string | null,
+};
+
+export type UpdateEquipmentInput = {
+  id: string,
+  group?: string | null,
+  name?: string | null,
+  description?: string | null,
+  part_id?: string | null,
+  extraDetails?: Array< ExtraDetailInput | null > | null,
+  _version?: number | null,
+  equipmentItemsId?: string | null,
+};
+
+export type DeleteEquipmentInput = {
+  id: string,
+  _version?: number | null,
+};
+
 export type ModelWarehouseFilterInput = {
   id?: ModelIDInput | null,
   group?: ModelStringInput | null,
@@ -384,6 +517,7 @@ export type ModelWarehouseFilterInput = {
   and?: Array< ModelWarehouseFilterInput | null > | null,
   or?: Array< ModelWarehouseFilterInput | null > | null,
   not?: ModelWarehouseFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export enum ModelSortDirection {
@@ -399,6 +533,7 @@ export type ModelOrganizationFilterInput = {
   and?: Array< ModelOrganizationFilterInput | null > | null,
   or?: Array< ModelOrganizationFilterInput | null > | null,
   not?: ModelOrganizationFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelOrganizationConnection = {
@@ -417,6 +552,7 @@ export type ModelKitPartFilterInput = {
   and?: Array< ModelKitPartFilterInput | null > | null,
   or?: Array< ModelKitPartFilterInput | null > | null,
   not?: ModelKitPartFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelItemFilterInput = {
@@ -425,11 +561,15 @@ export type ModelItemFilterInput = {
   productID?: ModelIDInput | null,
   isTagged?: ModelBooleanInput | null,
   isActive?: ModelBooleanInput | null,
+  isEmployee?: ModelBooleanInput | null,
+  isEquipment?: ModelBooleanInput | null,
   location?: ModelStringInput | null,
   lastActive?: ModelIntInput | null,
+  EPC_id?: ModelStringInput | null,
   and?: Array< ModelItemFilterInput | null > | null,
   or?: Array< ModelItemFilterInput | null > | null,
   not?: ModelItemFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelProductFilterInput = {
@@ -444,6 +584,48 @@ export type ModelProductFilterInput = {
   and?: Array< ModelProductFilterInput | null > | null,
   or?: Array< ModelProductFilterInput | null > | null,
   not?: ModelProductFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelEmployeeFilterInput = {
+  id?: ModelIDInput | null,
+  group?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  phone?: ModelStringInput | null,
+  and?: Array< ModelEmployeeFilterInput | null > | null,
+  or?: Array< ModelEmployeeFilterInput | null > | null,
+  not?: ModelEmployeeFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
+  employeeItemsId?: ModelIDInput | null,
+};
+
+export type ModelEmployeeConnection = {
+  __typename: "ModelEmployeeConnection",
+  items:  Array<Employee | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type ModelEquipmentFilterInput = {
+  id?: ModelIDInput | null,
+  group?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  part_id?: ModelStringInput | null,
+  and?: Array< ModelEquipmentFilterInput | null > | null,
+  or?: Array< ModelEquipmentFilterInput | null > | null,
+  not?: ModelEquipmentFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
+  equipmentItemsId?: ModelIDInput | null,
+};
+
+export type ModelEquipmentConnection = {
+  __typename: "ModelEquipmentConnection",
+  items:  Array<Equipment | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
 };
 
 export type ModelSubscriptionWarehouseFilterInput = {
@@ -453,6 +635,7 @@ export type ModelSubscriptionWarehouseFilterInput = {
   location?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionWarehouseFilterInput | null > | null,
   or?: Array< ModelSubscriptionWarehouseFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -490,6 +673,7 @@ export type ModelSubscriptionOrganizationFilterInput = {
   groupID?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrganizationFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrganizationFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionKitPartFilterInput = {
@@ -499,6 +683,7 @@ export type ModelSubscriptionKitPartFilterInput = {
   partID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionKitPartFilterInput | null > | null,
   or?: Array< ModelSubscriptionKitPartFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionIntInput = {
@@ -518,10 +703,14 @@ export type ModelSubscriptionItemFilterInput = {
   productID?: ModelSubscriptionIDInput | null,
   isTagged?: ModelSubscriptionBooleanInput | null,
   isActive?: ModelSubscriptionBooleanInput | null,
+  isEmployee?: ModelSubscriptionBooleanInput | null,
+  isEquipment?: ModelSubscriptionBooleanInput | null,
   location?: ModelSubscriptionStringInput | null,
   lastActive?: ModelSubscriptionIntInput | null,
+  EPC_id?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionItemFilterInput | null > | null,
   or?: Array< ModelSubscriptionItemFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionBooleanInput = {
@@ -539,6 +728,28 @@ export type ModelSubscriptionProductFilterInput = {
   warehouseID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionProductFilterInput | null > | null,
   or?: Array< ModelSubscriptionProductFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelSubscriptionEmployeeFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  email?: ModelSubscriptionStringInput | null,
+  phone?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionEmployeeFilterInput | null > | null,
+  or?: Array< ModelSubscriptionEmployeeFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelSubscriptionEquipmentFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  description?: ModelSubscriptionStringInput | null,
+  part_id?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionEquipmentFilterInput | null > | null,
+  or?: Array< ModelSubscriptionEquipmentFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type CreateWarehouseMutationVariables = {
@@ -1166,6 +1377,8 @@ export type CreateItemMutation = {
     productID: string,
     isTagged?: boolean | null,
     isActive?: boolean | null,
+    isEmployee?: boolean | null,
+    isEquipment?: boolean | null,
     location?: string | null,
     product?:  {
       __typename: "Product",
@@ -1212,6 +1425,7 @@ export type CreateItemMutation = {
       _lastChangedAt: number,
     } | null,
     lastActive?: number | null,
+    EPC_id?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1233,6 +1447,8 @@ export type UpdateItemMutation = {
     productID: string,
     isTagged?: boolean | null,
     isActive?: boolean | null,
+    isEmployee?: boolean | null,
+    isEquipment?: boolean | null,
     location?: string | null,
     product?:  {
       __typename: "Product",
@@ -1279,6 +1495,7 @@ export type UpdateItemMutation = {
       _lastChangedAt: number,
     } | null,
     lastActive?: number | null,
+    EPC_id?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1300,6 +1517,8 @@ export type DeleteItemMutation = {
     productID: string,
     isTagged?: boolean | null,
     isActive?: boolean | null,
+    isEmployee?: boolean | null,
+    isEquipment?: boolean | null,
     location?: string | null,
     product?:  {
       __typename: "Product",
@@ -1346,6 +1565,7 @@ export type DeleteItemMutation = {
       _lastChangedAt: number,
     } | null,
     lastActive?: number | null,
+    EPC_id?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1375,8 +1595,11 @@ export type CreateProductMutation = {
         productID: string,
         isTagged?: boolean | null,
         isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
         location?: string | null,
         lastActive?: number | null,
+        EPC_id?: string | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -1471,8 +1694,11 @@ export type UpdateProductMutation = {
         productID: string,
         isTagged?: boolean | null,
         isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
         location?: string | null,
         lastActive?: number | null,
+        EPC_id?: string | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -1567,8 +1793,11 @@ export type DeleteProductMutation = {
         productID: string,
         isTagged?: boolean | null,
         isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
         location?: string | null,
         lastActive?: number | null,
+        EPC_id?: string | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -1639,6 +1868,375 @@ export type DeleteProductMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+  } | null,
+};
+
+export type CreateEmployeeMutationVariables = {
+  input: CreateEmployeeInput,
+  condition?: ModelEmployeeConditionInput | null,
+};
+
+export type CreateEmployeeMutation = {
+  createEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    title?: string | null,
+    email?: string | null,
+    phone?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    employeeItemsId?: string | null,
+  } | null,
+};
+
+export type UpdateEmployeeMutationVariables = {
+  input: UpdateEmployeeInput,
+  condition?: ModelEmployeeConditionInput | null,
+};
+
+export type UpdateEmployeeMutation = {
+  updateEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    title?: string | null,
+    email?: string | null,
+    phone?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    employeeItemsId?: string | null,
+  } | null,
+};
+
+export type DeleteEmployeeMutationVariables = {
+  input: DeleteEmployeeInput,
+  condition?: ModelEmployeeConditionInput | null,
+};
+
+export type DeleteEmployeeMutation = {
+  deleteEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    title?: string | null,
+    email?: string | null,
+    phone?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    employeeItemsId?: string | null,
+  } | null,
+};
+
+export type CreateEquipmentMutationVariables = {
+  input: CreateEquipmentInput,
+  condition?: ModelEquipmentConditionInput | null,
+};
+
+export type CreateEquipmentMutation = {
+  createEquipment?:  {
+    __typename: "Equipment",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    description?: string | null,
+    part_id?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    equipmentItemsId?: string | null,
+  } | null,
+};
+
+export type UpdateEquipmentMutationVariables = {
+  input: UpdateEquipmentInput,
+  condition?: ModelEquipmentConditionInput | null,
+};
+
+export type UpdateEquipmentMutation = {
+  updateEquipment?:  {
+    __typename: "Equipment",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    description?: string | null,
+    part_id?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    equipmentItemsId?: string | null,
+  } | null,
+};
+
+export type DeleteEquipmentMutationVariables = {
+  input: DeleteEquipmentInput,
+  condition?: ModelEquipmentConditionInput | null,
+};
+
+export type DeleteEquipmentMutation = {
+  deleteEquipment?:  {
+    __typename: "Equipment",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    description?: string | null,
+    part_id?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    equipmentItemsId?: string | null,
   } | null,
 };
 
@@ -2230,6 +2828,8 @@ export type GetItemQuery = {
     productID: string,
     isTagged?: boolean | null,
     isActive?: boolean | null,
+    isEmployee?: boolean | null,
+    isEquipment?: boolean | null,
     location?: string | null,
     product?:  {
       __typename: "Product",
@@ -2276,6 +2876,7 @@ export type GetItemQuery = {
       _lastChangedAt: number,
     } | null,
     lastActive?: number | null,
+    EPC_id?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2300,6 +2901,8 @@ export type ListItemsQuery = {
       productID: string,
       isTagged?: boolean | null,
       isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
       location?: string | null,
       product?:  {
         __typename: "Product",
@@ -2318,6 +2921,7 @@ export type ListItemsQuery = {
         _lastChangedAt: number,
       } | null,
       lastActive?: number | null,
+      EPC_id?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -2346,6 +2950,8 @@ export type SyncItemsQuery = {
       productID: string,
       isTagged?: boolean | null,
       isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
       location?: string | null,
       product?:  {
         __typename: "Product",
@@ -2364,6 +2970,7 @@ export type SyncItemsQuery = {
         _lastChangedAt: number,
       } | null,
       lastActive?: number | null,
+      EPC_id?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -2393,6 +3000,8 @@ export type ItemsByProductIDQuery = {
       productID: string,
       isTagged?: boolean | null,
       isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
       location?: string | null,
       product?:  {
         __typename: "Product",
@@ -2411,6 +3020,7 @@ export type ItemsByProductIDQuery = {
         _lastChangedAt: number,
       } | null,
       lastActive?: number | null,
+      EPC_id?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -2442,8 +3052,11 @@ export type GetProductQuery = {
         productID: string,
         isTagged?: boolean | null,
         isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
         location?: string | null,
         lastActive?: number | null,
+        EPC_id?: string | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -2688,6 +3301,335 @@ export type ProductsByWarehouseIDQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetEmployeeQueryVariables = {
+  id: string,
+};
+
+export type GetEmployeeQuery = {
+  getEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    title?: string | null,
+    email?: string | null,
+    phone?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    employeeItemsId?: string | null,
+  } | null,
+};
+
+export type ListEmployeesQueryVariables = {
+  filter?: ModelEmployeeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListEmployeesQuery = {
+  listEmployees?:  {
+    __typename: "ModelEmployeeConnection",
+    items:  Array< {
+      __typename: "Employee",
+      id: string,
+      group: string,
+      name: string,
+      items?:  {
+        __typename: "Item",
+        id: string,
+        group: string,
+        productID: string,
+        isTagged?: boolean | null,
+        isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
+        location?: string | null,
+        lastActive?: number | null,
+        EPC_id?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      title?: string | null,
+      email?: string | null,
+      phone?: string | null,
+      extraDetails?:  Array< {
+        __typename: "ExtraDetail",
+        name?: string | null,
+        value?: string | null,
+      } | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      employeeItemsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncEmployeesQueryVariables = {
+  filter?: ModelEmployeeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncEmployeesQuery = {
+  syncEmployees?:  {
+    __typename: "ModelEmployeeConnection",
+    items:  Array< {
+      __typename: "Employee",
+      id: string,
+      group: string,
+      name: string,
+      items?:  {
+        __typename: "Item",
+        id: string,
+        group: string,
+        productID: string,
+        isTagged?: boolean | null,
+        isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
+        location?: string | null,
+        lastActive?: number | null,
+        EPC_id?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      title?: string | null,
+      email?: string | null,
+      phone?: string | null,
+      extraDetails?:  Array< {
+        __typename: "ExtraDetail",
+        name?: string | null,
+        value?: string | null,
+      } | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      employeeItemsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetEquipmentQueryVariables = {
+  id: string,
+};
+
+export type GetEquipmentQuery = {
+  getEquipment?:  {
+    __typename: "Equipment",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    description?: string | null,
+    part_id?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    equipmentItemsId?: string | null,
+  } | null,
+};
+
+export type ListEquipmentQueryVariables = {
+  filter?: ModelEquipmentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListEquipmentQuery = {
+  listEquipment?:  {
+    __typename: "ModelEquipmentConnection",
+    items:  Array< {
+      __typename: "Equipment",
+      id: string,
+      group: string,
+      name: string,
+      items?:  {
+        __typename: "Item",
+        id: string,
+        group: string,
+        productID: string,
+        isTagged?: boolean | null,
+        isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
+        location?: string | null,
+        lastActive?: number | null,
+        EPC_id?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      description?: string | null,
+      part_id?: string | null,
+      extraDetails?:  Array< {
+        __typename: "ExtraDetail",
+        name?: string | null,
+        value?: string | null,
+      } | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      equipmentItemsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncEquipmentQueryVariables = {
+  filter?: ModelEquipmentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncEquipmentQuery = {
+  syncEquipment?:  {
+    __typename: "ModelEquipmentConnection",
+    items:  Array< {
+      __typename: "Equipment",
+      id: string,
+      group: string,
+      name: string,
+      items?:  {
+        __typename: "Item",
+        id: string,
+        group: string,
+        productID: string,
+        isTagged?: boolean | null,
+        isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
+        location?: string | null,
+        lastActive?: number | null,
+        EPC_id?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      description?: string | null,
+      part_id?: string | null,
+      extraDetails?:  Array< {
+        __typename: "ExtraDetail",
+        name?: string | null,
+        value?: string | null,
+      } | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      equipmentItemsId?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -3309,6 +4251,8 @@ export type OnCreateItemSubscription = {
     productID: string,
     isTagged?: boolean | null,
     isActive?: boolean | null,
+    isEmployee?: boolean | null,
+    isEquipment?: boolean | null,
     location?: string | null,
     product?:  {
       __typename: "Product",
@@ -3355,6 +4299,7 @@ export type OnCreateItemSubscription = {
       _lastChangedAt: number,
     } | null,
     lastActive?: number | null,
+    EPC_id?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -3375,6 +4320,8 @@ export type OnUpdateItemSubscription = {
     productID: string,
     isTagged?: boolean | null,
     isActive?: boolean | null,
+    isEmployee?: boolean | null,
+    isEquipment?: boolean | null,
     location?: string | null,
     product?:  {
       __typename: "Product",
@@ -3421,6 +4368,7 @@ export type OnUpdateItemSubscription = {
       _lastChangedAt: number,
     } | null,
     lastActive?: number | null,
+    EPC_id?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -3441,6 +4389,8 @@ export type OnDeleteItemSubscription = {
     productID: string,
     isTagged?: boolean | null,
     isActive?: boolean | null,
+    isEmployee?: boolean | null,
+    isEquipment?: boolean | null,
     location?: string | null,
     product?:  {
       __typename: "Product",
@@ -3487,6 +4437,7 @@ export type OnDeleteItemSubscription = {
       _lastChangedAt: number,
     } | null,
     lastActive?: number | null,
+    EPC_id?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -3515,8 +4466,11 @@ export type OnCreateProductSubscription = {
         productID: string,
         isTagged?: boolean | null,
         isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
         location?: string | null,
         lastActive?: number | null,
+        EPC_id?: string | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -3610,8 +4564,11 @@ export type OnUpdateProductSubscription = {
         productID: string,
         isTagged?: boolean | null,
         isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
         location?: string | null,
         lastActive?: number | null,
+        EPC_id?: string | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -3705,8 +4662,11 @@ export type OnDeleteProductSubscription = {
         productID: string,
         isTagged?: boolean | null,
         isActive?: boolean | null,
+        isEmployee?: boolean | null,
+        isEquipment?: boolean | null,
         location?: string | null,
         lastActive?: number | null,
+        EPC_id?: string | null,
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -3777,5 +4737,368 @@ export type OnDeleteProductSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+  } | null,
+};
+
+export type OnCreateEmployeeSubscriptionVariables = {
+  filter?: ModelSubscriptionEmployeeFilterInput | null,
+};
+
+export type OnCreateEmployeeSubscription = {
+  onCreateEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    title?: string | null,
+    email?: string | null,
+    phone?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    employeeItemsId?: string | null,
+  } | null,
+};
+
+export type OnUpdateEmployeeSubscriptionVariables = {
+  filter?: ModelSubscriptionEmployeeFilterInput | null,
+};
+
+export type OnUpdateEmployeeSubscription = {
+  onUpdateEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    title?: string | null,
+    email?: string | null,
+    phone?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    employeeItemsId?: string | null,
+  } | null,
+};
+
+export type OnDeleteEmployeeSubscriptionVariables = {
+  filter?: ModelSubscriptionEmployeeFilterInput | null,
+};
+
+export type OnDeleteEmployeeSubscription = {
+  onDeleteEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    title?: string | null,
+    email?: string | null,
+    phone?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    employeeItemsId?: string | null,
+  } | null,
+};
+
+export type OnCreateEquipmentSubscriptionVariables = {
+  filter?: ModelSubscriptionEquipmentFilterInput | null,
+};
+
+export type OnCreateEquipmentSubscription = {
+  onCreateEquipment?:  {
+    __typename: "Equipment",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    description?: string | null,
+    part_id?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    equipmentItemsId?: string | null,
+  } | null,
+};
+
+export type OnUpdateEquipmentSubscriptionVariables = {
+  filter?: ModelSubscriptionEquipmentFilterInput | null,
+};
+
+export type OnUpdateEquipmentSubscription = {
+  onUpdateEquipment?:  {
+    __typename: "Equipment",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    description?: string | null,
+    part_id?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    equipmentItemsId?: string | null,
+  } | null,
+};
+
+export type OnDeleteEquipmentSubscriptionVariables = {
+  filter?: ModelSubscriptionEquipmentFilterInput | null,
+};
+
+export type OnDeleteEquipmentSubscription = {
+  onDeleteEquipment?:  {
+    __typename: "Equipment",
+    id: string,
+    group: string,
+    name: string,
+    items?:  {
+      __typename: "Item",
+      id: string,
+      group: string,
+      productID: string,
+      isTagged?: boolean | null,
+      isActive?: boolean | null,
+      isEmployee?: boolean | null,
+      isEquipment?: boolean | null,
+      location?: string | null,
+      product?:  {
+        __typename: "Product",
+        id: string,
+        group: string,
+        name: string,
+        isKit: boolean,
+        description?: string | null,
+        trackThreshold: boolean,
+        threshold?: number | null,
+        warehouseID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lastActive?: number | null,
+      EPC_id?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    description?: string | null,
+    part_id?: string | null,
+    extraDetails?:  Array< {
+      __typename: "ExtraDetail",
+      name?: string | null,
+      value?: string | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    equipmentItemsId?: string | null,
   } | null,
 };
