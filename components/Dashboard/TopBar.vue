@@ -17,7 +17,7 @@
         class="h-12 w-12 rounded-full border-vvn-white-10 flex flex-col justify-center border"
         @click="signOut()">
         <img
-          src="/images/svg/box.svg"
+          src="/images/svg/logout.svg"
           class="mx-auto"
           alt=""
         >
@@ -27,22 +27,6 @@
           src="/images/svg/gear.svg"
           class="mx-auto"
           alt="settings"
-        >
-      </button>
-      <button 
-        class="h-12 w-12 rounded-full border-vvn-white-10 flex flex-col justify-center border"
-        @click="redirect()">
-        <img
-          src="/images/svg/comment.svg"
-          class="mx-auto"
-          alt="comments"
-        >
-      </button>
-      <button class="h-12 w-12 rounded-full border-vvn-white-10 flex flex-col justify-center border">
-        <img
-          src="/images/svg/bell.svg"
-          class="mx-auto"
-          alt="notifications"
         >
       </button>
       <img

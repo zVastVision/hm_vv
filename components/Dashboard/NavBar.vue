@@ -60,7 +60,7 @@
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink :to="`/warehouse-${$route.params.warehouseId}/tools`">
+          <NuxtLink :to="`/warehouse-${$route.params.warehouseId}/equipment`">
             <div class="flex items-center gap-6 pl-6 pr-2 text-lg">
               <div class="h-9 w-9 rounded-[10px] flex flex-col justify-center">
                 <img
@@ -69,7 +69,7 @@
                   alt="tools"
                 >
               </div>
-              Tools
+              Equipment
             </div>
           </NuxtLink>
         </li>
@@ -102,7 +102,7 @@
           </NuxtLink>
         </li> -->
         <li>
-          <NuxtLink to="/organization">
+          <NuxtLink to="/">
             <div class="flex items-center gap-6 pl-6 pr-2 text-lg">
               <div class="h-9 w-9 rounded-[10px] flex flex-col justify-center">
                 <img

@@ -1,28 +1,29 @@
 <template>
   <div class="flex p-5 items-end justify-between">
     <div class="grid grid-cols-4 gap-2 w-8/12">
+
       <div class="table_details_card">
-        <p class="table_details_card__heading text-vvn-blue">
-          Name
+        <p class="table_details_card__heading text-vvn-green">
+          Total Inventory
         </p>
         <p class="table_details_card__body--regular">
-          {{ data.name }}
-        </p>
-      </div>
-      <div class="table_details_card">
-        <p class="table_details_card__heading text-vvn-blue">
-          Description
-        </p>
-        <p class="table_details_card__body--regular line-clamp-1">
-          {{ data.description }}
+          {{ data.quantity }}
         </p>
       </div>
       <div class="table_details_card">
         <p class="table_details_card__heading text-vvn-green">
-          Quantity
+          Inactive Inventory
         </p>
         <p class="table_details_card__body--regular">
-          {{ data.quantity }}
+          {{ data.quantity - data.liveTags }}
+        </p>
+      </div>
+      <div class="table_details_card">
+        <p class="table_details_card__heading text-vvn-green">
+          Active Inventory
+        </p>
+        <p class="table_details_card__body--regular">
+          {{ data.liveTags }}
         </p>
       </div>
       <div class="table_details_card">

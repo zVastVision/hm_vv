@@ -97,7 +97,7 @@
   <!-- ================================================ -->
   <TheTable
     v-else
-    :rows="['', 'Item Name', 'Status', 'Available Stock', '', '']"
+    :rows="['', 'Item Name', 'Status', 'Total Inventory', 'Active Inventory', '']"
     :template-columns="{ 'grid-template-columns': '5% 30% 25% 15% 15% 10%' }"
   >
     <TableRow
@@ -141,7 +141,9 @@
         <td class=" text-base">
           {{ rowData.quantity }}
         </td>
-        <td />
+        <td class=" text-base">
+          {{ rowData.liveTags }}
+        </td>
         <td class="flex justify-end">
           <button
             class=" mr-11"
@@ -219,10 +221,11 @@ const tableDetails = computed(() => {
 })
 
 watch(searchInput, async (current) => {
-  store.searchInventoryItem(current, route.params.warehouseId as string, { page: 0, size: 5 })
+  store.searchInventoryItem(current, route.params.warehouseId as string, { page: 0, size: 100 })
 })
 
 await useAsyncData('', () => store.getInventoryItems(route.params.warehouseId as string, {}))
+await useAsyncData('', () => store.subFunc(route.params.warehouseId as string, {}))
 
 const deleteItems = () => {
   store.deleteItems(data.selected)

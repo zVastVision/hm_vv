@@ -13,6 +13,17 @@ export const useInventoryStore = defineStore('inventory', {
         inventoryItems: []
     }),
     actions: {
+        async subFunc(warehouseId: string, pagination: Paging): Promise<void> {
+            DataStore.observe(ItemModel).subscribe(msg => {
+              //console.log("SOMETHING")
+              this.getInventoryItems(warehouseId, pagination)
+              this.getInventoryItems({})
+              //this.getEmployeeItems({})
+              //this.getEquipmentItems({})
+            });
+
+        },
+
         async createInventoryInstance(input: Inventory): Promise<void> {
             await this.createItem(input);
         },
@@ -47,7 +58,24 @@ export const useInventoryStore = defineStore('inventory', {
                 group: groupList[0]
             }));
 
+            const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
             const items = [];
+            for (let i = 0; i < (input.quantity || 0); i++) {
+                items.push(
+                    DataStore.save(new ItemModel({
+                        productID: product.id,
+                        isTagged: false,
+                        isActive: false,
+                        isEmployee: false,
+                        isEquipment: false,
+                        EPC_id: genRanHex(24).toUpperCase(),
+                        group: groupList[0]
+                    })
+                    )
+                );
+            }
+
+            /*const items = [];
             for (let i = 0; i < (input.quantity || 0); i++) {
                 items.push(
                     DataStore.save(new ItemModel({
@@ -58,7 +86,7 @@ export const useInventoryStore = defineStore('inventory', {
                     })
                     )
                 );
-            }
+            }*/
 
             const res = await Promise.allSettled(items);
             return res;
@@ -98,7 +126,8 @@ export const useInventoryStore = defineStore('inventory', {
                     trackThreshold: product.trackThreshold,
                     extraDetails: product.extraDetails as Record<string, string>[],
                     isKit: product.isKit,
-                    quantity: (await product.items.toArray()).length || 0
+                    quantity: (await product.items.toArray()).length || 0,
+                    liveTags: (await product.items.toArray()).filter((x,i) => { return x.isActive; }).length || 0
                 }
                 inventoryList.push(inventoryItem)
             }
@@ -154,6 +183,34 @@ export const useInventoryStore = defineStore('inventory', {
             })
         },
 
+        async encItem(item: Inventory[]): Promise<string[]> {
+            //const epcs = []
+            const epcs = {}
+            for (let i = 0; i < item[0].length; i++) {
+              const original = await DataStore.query(ItemModel, (c) => c.and(c => [
+                                                       c.productID.eq(item[0][i].id as string),
+                                                       c.isTagged.eq(false)
+              ]))
+
+              if (original) {
+                const sub_epcs = []
+            
+                for (let j = 0; j < item[0][i].quantity; j++) {
+                  await DataStore.save(
+                    ItemModel.copyOf(original[j], updated => {
+                        updated.isTagged = true
+                    })
+                  );
+                  sub_epcs.push(original[j].EPC_id)
+                }
+                //epcs.push(sub_epcs)
+                epcs[item[0][i].name] = [item[0][i].description,[sub_epcs]]
+              }
+            }
+            
+            return epcs
+        },
+
         async editInventoryItem(item: Inventory) {
             const original = await DataStore.query(ProductModel, item.id as string)
             if (original) {
@@ -188,7 +245,8 @@ export const useInventoryStore = defineStore('inventory', {
                     extraDetails: product.extraDetails as Record<string, string>[],
                     threshold: product.threshold || null,
                     isKit: product.isKit || false,
-                    quantity: this.inventoryItems.length
+                    quantity: this.inventoryItems.length,
+                    liveTags: (await product.items.toArray()).filter((x,i) => { return x.isActive; }).length || 0
                 }
                 const res = await product.kitParts.toArray();
                 const partRequests = res.map(i => DataStore.query(ProductModel, i.partID))

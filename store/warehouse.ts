@@ -12,7 +12,6 @@ export const useWarehouseStore = defineStore('warehouse', {
     }),
     actions: {
         async findById(id: string) {
-            
             const warehouse = (await DataStore.query(WarehouseModel, id)) as Warehouse
             this.warehouse = {name: warehouse.name, location: warehouse.location, id: warehouse.id}
         },
@@ -34,8 +33,11 @@ export const useWarehouseStore = defineStore('warehouse', {
             //await this.findById('8e4f87fa-e7aa-4774-9ba3-9a700bac1ca4')
             //this.warehouseList = [this.warehouse]
             //this.organization = { name: 'Sunrise Offices', id: 'sunrise' }
-            //await this.findById('7960f460-3e66-4c75-9586-4a2473779ad2')
+            //await this.findById('24a3579e-5241-415c-a468-529cffbea6df')
             //this.warehouseList = [this.warehouse]
+
+            //console.log("warehouse?")
+            //console.log(this.warehouseList)
 
             if (res === undefined) {
                 console.log("INSIDE THIS MF")

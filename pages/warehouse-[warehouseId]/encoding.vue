@@ -25,6 +25,7 @@
             class="btn btn--primary"
             type="submit"
             :disabled="true && data.encodingList.length == 0"
+            @click="sendToPrinter()"
           >
             Print and Encode
           </button>
@@ -58,6 +59,14 @@
           </td>
           <td>
             <div
+              v-if="sentToPrinterClicked == true"
+              class="flex rounded-lg w-max items-center px-2 py-1 text-xs border-2 border-green-900 bg-green-800"
+            >
+              <div class="rounded-full bg-green-600 h-2 w-2 mr-2" />
+              Sent to Printer
+            </div>
+            <div
+              v-else
               class="flex rounded-lg w-max items-center px-2 py-1 text-xs border-2 border-red-900 bg-red-800"
             >
               <div class="rounded-full bg-red-600 h-2 w-2 mr-2" />
@@ -159,7 +168,7 @@
     @close="successModalOpen=false"
   >
     <h5 class=" text-2xl text-white text-center mt-4">
-      Kit created successfully
+      Items Sent to Printer
     </h5>
     <div class="flex justify-center mt-8">
       <button
@@ -199,6 +208,7 @@ const data = reactive<EncodingData>({
 const editItemsOpen = ref(false)
 const searchInput = useDebouncedRef("", 200)
 const successModalOpen = ref(false)
+const sentToPrinterClicked = ref(false)
 const inventoryStore = useInventoryStore()
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
@@ -228,6 +238,58 @@ const addItemToEncodingQueue = (rowData: Inventory, index: number) => {
     useSetLocalStorage(runtimeConfig.app.encodingQueue+"." + route.params.warehouseId, data.encodingList)
     useToast().success(`${rowData.name} added to queue`)
   }
+}
+
+const sendToPrinter = () => {
+  //console.log(inventoryStore.editItem([data.encodingList]))
+  const epcs = inventoryStore.encItem([data.encodingList])
+  //var epcs = []
+
+  /*if(i_clicked == true){
+    epcs = inventoryStore.encItem([data.encodingList])
+  }
+  if(em_clicked == true){
+    pressEmp()
+  }
+  if(eq_clicked == true){
+    pressEq()
+  }*/
+
+  epcs.then((result) => {
+    console.log("THE EPC!!!")
+    console.log(result)
+
+    //const zplString = '^XA^RS8^RFW,H^FD123456789ABC123456789ABC^FS^RFR,H,0,12,1^FN1^FS^XZ'
+
+    let zplString = ''
+    const keys = Object.keys(result)
+    for (let l = 0; l < keys.length; l++) {
+      //console.log("FOR LOOP")
+      //console.log(result[keys[l]])
+
+      const sub_epcs = result[keys[l]][1][0]
+      for (let k = 0; k < sub_epcs.length; k++) {
+        zplString = zplString + '^XA^FO50,50^A0N,50,50^FD' + keys[l] + '^FS^FO50,150^A0N,50,50^FD' + result[keys[l]][0] + '^FS^RS8^RFW,H^FD' + sub_epcs[k] + '^FS^RFR,H,0,12,1^FN1^FS^XZ'
+      }
+    }
+    console.log(zplString)
+
+    successModalOpen.value = true
+    sentToPrinterClicked.value = true
+
+    const printer_data = new FormData()
+
+    printer_data.append("sn", "DBN231050752")
+    const fileBlob = new Blob([zplString], {type: 'text/plain'})
+    printer_data.append("zpl_file", fileBlob, "ZplFile.txt")
+    const xhr = new XMLHttpRequest()
+    xhr.open("POST", "https://api.zebra.com/v2/devices/printers/send")
+    xhr.setRequestHeader("apikey", "SW5fV2HzowqkaKdxTKmNhAw0MGYsSSPr")
+    xhr.setRequestHeader("tenant", "83c99b121eda1c7f6a30e5b65a210b91")
+    xhr.send(printer_data)
+  }).catch((err) => {
+    useToast().error("No more avaiable EPCs to utilize")
+  });
 }
 
 const clearQueue = () => {
